@@ -1,6 +1,7 @@
 
 #Author:    Aya Tamer Nabil
 #Created:   26.02.2020
+import string
 def sxor(a, b):    
     return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b)])
 # The given ciphers in the assignment document
@@ -69,7 +70,7 @@ print("Now we use the infered text to retrieve the key")
 print("====================================================================")
 print("\n")
 
-key = sxor(bytearray.fromhex(target_cipher).decode('latin-1'),infered_text)
+key = sxor(bytearray.fromhex(target_ciphers[3]).decode('latin-1'),infered_text)
 
 print("the key is :",key)
 print("\n")
