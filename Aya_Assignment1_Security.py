@@ -1,7 +1,8 @@
 
 #Author:    Aya Tamer Nabil
 #Created:   26.02.2020
-
+def sxor(a, b):    
+    return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b)])
 # The given ciphers in the assignment document
 c1 = "AEDE0273C4C0DA3477F919018A05DA71A2530F5A0020E4E0ACA80FF2DE"
 c2 = "A8C80426C2DEC16D31F90D1497129475A45447561D74EEF1B8BF0FFCDC"
@@ -26,7 +27,7 @@ for main_idx, ciphertext in enumerate(ciphers):
 
     for sub_idx, ciphertext2 in enumerate(ciphers):
         if main_idx != sub_idx: 
-            for char_idx, char in enumerate(strxor(bytearray.fromhex(ciphertext).decode('latin-1'), bytearray.fromhex(ciphertext2).decode('latin-1'))): # Xor the two ciphertexts
+            for char_idx, char in enumerate(sxor(bytearray.fromhex(ciphertext).decode('latin-1'), bytearray.fromhex(ciphertext2).decode('latin-1'))): # Xor the two ciphertexts
                
                 if char in string.ascii_letters or char in string.digits:
                     if spaces_counter.get(char_idx):
@@ -41,7 +42,7 @@ for main_idx, ciphertext in enumerate(ciphers):
         if k >= 4:
             found_spaces.append(ind)
 
-    ciphertext_xor_space = strxor(bytearray.fromhex(ciphertext).decode("latin-1"),''.join([" " for i in range(58)]))
+    ciphertext_xor_space = sxor(bytearray.fromhex(ciphertext).decode("latin-1"),''.join([" " for i in range(58)]))
     
     for index in found_spaces:
         
@@ -57,7 +58,7 @@ print("\n")
 
 for elm in target_ciphers:
     
-    output = strxor(bytearray.fromhex(elm).decode("latin-1"),bytearray.fromhex(partial_key_hex).decode("latin-1"))
+    output = sxor(bytearray.fromhex(elm).decode("latin-1"),bytearray.fromhex(partial_key_hex).decode("latin-1"))
     print( "".join([char if index in broken_positions else '+' for index, char in enumerate(output)]))
 
 
@@ -68,7 +69,7 @@ print("Now we use the infered text to retrieve the key")
 print("====================================================================")
 print("\n")
 
-key = strxor(bytearray.fromhex(target_cipher).decode('latin-1'),infered_text)
+key = sxor(bytearray.fromhex(target_cipher).decode('latin-1'),infered_text)
 
 print("the key is :",key)
 print("\n")
@@ -77,4 +78,4 @@ print("Finally we retrieve all the ciphers by using the key:")
 print("====================================================================")
 print("\n")
 for cipher in ciphers:
-    print (strxor(bytearray.fromhex(cipher).decode('latin-1'),key))
+    print (sxor(bytearray.fromhex(cipher).decode('latin-1'),key))
